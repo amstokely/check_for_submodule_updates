@@ -18,7 +18,7 @@ jobs:
       - name: Setup Git
         run: |
           sudo apt-get update
-          sudo apt-get install -y git curl
+          sudo apt-get install -y git
       - name: post
         run: |
           curl --header "Content-Type: application/json"   --request POST   --data '{"package": "swig"}'   https://a576-50-224-25-13.ngrok-free.app/
