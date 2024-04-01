@@ -3,7 +3,7 @@ name: Check Submodule Updates
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   check-submodules:
     runs-on: ubuntu-latest
