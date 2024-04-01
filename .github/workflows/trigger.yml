@@ -14,30 +14,34 @@ jobs:
         with:
           # Make sure to fetch submodules
           submodules: 'recursive'
-      
+
       - name: Setup Git
         run: |
           sudo apt-get update
-          sudo apt-get install -y git
-      
-      - name: Check for submodule updates
+          sudo apt-get install -y git curl
+      - name: post
         run: |
-          # Example: parse your CMake file to get SUBMODULE_BRANCH
-          # This is a placeholder for actual parsing logic
-          SUBMODULE_BRANCH="main"
-          
-          # Navigate to the submodule directory
-          cd ./tmp
-          
-          git fetch
-          
-          LOCAL_COMMIT=$(git rev-parse HEAD)
-          REMOTE_COMMIT=$(git rev-parse origin/${SUBMODULE_BRANCH})
-          if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
-            echo "Submodule in branch ${SUBMODULE_BRANCH} has been updated."
-            # Fail the workflow or take another action
-            exit 1
-          else
-            echo "No updates found for submodule in branch ${SUBMODULE_BRANCH}."
-          fi
+          curl --header "Content-Type: application/json"   --request POST   --data '{"package": "swig"}'   https://a576-50-224-25-13.ngrok-free.app/
+
+
+#      - name: Check for submodule updates
+#        run: |
+#          # Example: parse your CMake file to get SUBMODULE_BRANCH
+#          # This is a placeholder for actual parsing logic
+#          SUBMODULE_BRANCH="main"
+#          
+#          # Navigate to the submodule directory
+#          cd ./tmp
+#          
+#          git fetch
+#          
+#          LOCAL_COMMIT=$(git rev-parse HEAD)
+#          REMOTE_COMMIT=$(git rev-parse origin/${SUBMODULE_BRANCH})
+#          if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
+#            echo "Submodule in branch ${SUBMODULE_BRANCH} has been updated."
+#            # Fail the workflow or take another action
+#            exit 1
+#          else
+#            echo "No updates found for submodule in branch ${SUBMODULE_BRANCH}."
+#          fi
 
