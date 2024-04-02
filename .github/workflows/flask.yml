@@ -30,7 +30,4 @@ jobs:
       - name: Create Empty Commit
         run: |
           git checkout dev
-          git commit --allow-empty -m "Empty commit"
-          git push origin dev
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "$(git show-ref)"
