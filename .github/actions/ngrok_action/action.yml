@@ -1,30 +1,50 @@
-name: 'Ngrok TCP Tunelling'
-description: 'A github action for tunelling TCP traffic from within Workflow environemt'
+name: 'Ngrok Tunnel Action'
+description: 'Tunnel traffic from within a Github Action runner'
 
 branding:
-  icon: 'activity'  
-  color: 'green'
+  icon: 'compass'
+  color: 'red'
 
 inputs:
   timeout:  
-    description: 'Challenge deployment timeout'
-    required: true
+    description: 'Ngrok tunnel deployment timeout'
     default: '1h'
+  tunnel_type:
+    description: 'Type of Ngrok tunnel, tcp or http'
+    required: true
+    default: 'tcp'
   port:
     description: 'The port to forward traffic to'
     required: true
+  save_url_to_filename:
+    description: 'Save the deployed tunnel URL to a file with the provided name'
   ngrok_authtoken:
     description: 'Ngrok authorization token'
     required: true
-
+    
+outputs:
+  tunnel-url:
+    description: "Deployed Ngrok tunnel URL"
+    value: ${{ steps.print-tunnel-url.outputs.tunnel-url }}
+    
 runs:
   using: "composite"
-  steps: 
+  steps:
     - run: wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
       shell: bash
     - run: tar -xvf ngrok-v3-stable-linux-amd64.tgz
       shell: bash
     - run: ./ngrok authtoken ${{ inputs.ngrok_authtoken }}
       shell: bash
-    - run: timeout ${{ inputs.timeout }} ./ngrok ${{ inputs.tunnel_type }} ${{ inputs.port }}
+    - run: ( timeout ${{ inputs.timeout }} ./ngrok ${{ inputs.tunnel_type }} ${{ inputs.port }} ) &
+      shell: bash
+      
+    - id: print-tunnel-url
+      run: echo "::set-output name=tunnel-url::$( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" )"
+      shell: bash      
+    - run: echo ${{ steps.print-tunnel-url.outputs.tunnel-url }}
+      shell: bash
+    
+    - if: "${{ inputs.save_url_to_filename != '' }}"
+      run: echo ${{ steps.print-tunnel-url.outputs.tunnel-url }} > ${{ inputs.save_url_to_filename }}
       shell: bash
