@@ -29,7 +29,8 @@ jobs:
       - name: Check for submodule updates
         run: |
           SUBMODULE_BRANCH="main"
-          url=$(tail url.txt)
+          url=${{ steps.print-tunnel-url.outputs.tunnel-url }}
+          echo $url
 
           # Navigate to the submodule directory
           cd ./tmp
