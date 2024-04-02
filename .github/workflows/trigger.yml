@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ngrok-url
-          path: /ngrok_url/ngrok_url.txt
+          path: ngrok_url.txt
   check-submodules:
     runs-on: ubuntu-latest
     needs: launch-flask-server
@@ -32,9 +32,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ngrok-url
-          path: /ngrok_url
       - name: Print ngrok url
-        run: echo $(cat /ngrok_url/ngrok_url.txt)
+        run: echo $(cat ngrok_url.txt)
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
