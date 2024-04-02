@@ -17,28 +17,18 @@ jobs:
             tunnel_type: 'http'
             port: 5000
             save_url_to_filename: 'ngrok_url.txt'
+      - name: set_url_env
+        run: echo "NGROK_URL=$(cat ngrok_url.txt)" >> $GITHUB_ENV
       - name: Start flask server
         run: ( python app.py > /dev/null 2>&1 ) &
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ngrok-url
-          path: ngrok_url.txt
   check-submodules:
     runs-on: ubuntu-latest
     needs: launch-flask-server
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: ngrok-url
-          path: .
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          # Make sure to fetch submodules
           submodules: 'recursive'
-
       - name: Setup Git
         run: |
           sudo apt-get update
@@ -46,7 +36,7 @@ jobs:
       - name: Check for submodule updates
         run: |
           SUBMODULE_BRANCH="main"
-          url=$(cat ngrok_url.txt)
+          url=${{ env.NGROK_URL }}
           # Navigate to the submodule directory
           cd ./tmp
           echo "Entering submodule directory..."
