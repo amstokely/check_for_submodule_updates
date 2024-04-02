@@ -23,10 +23,6 @@ jobs:
         with:
           name: ngrok-url
           path: ngrok_url.txt
-      - name: Setup git
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git
       - name: Push to dev
         run: |
           git push origin dev
