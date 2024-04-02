@@ -1,0 +1,32 @@
+name: Start flask
+on:
+  push:
+    branches:
+      - master
+jobs:
+  launch-flask-server:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: ./.github/actions/ngrok_action
+        id: ngrok
+        with:
+            ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
+            timeout: '1h'
+            tunnel_type: 'http'
+            port: 5000
+            save_url_to_filename: 'ngrok_url.txt'
+      - name: Start flask server
+        run: ( python app.py > /dev/null 2>&1 ) &
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ngrok-url
+          path: ngrok_url.txt
+      - name: Setup git
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+      - name: Push to dev
+        run: |
+          git push origin dev
