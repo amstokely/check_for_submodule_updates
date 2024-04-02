@@ -20,12 +20,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y git
       - name: Start flask server
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3
-          sudo apt-get install -y python3-pip
-          pip3 install flask
-          python3 app.py
+        uses: luisboto/ngrok-tunnel-action@2
+        with:
+          timeout: 1h
+          port: 8080
+          ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
+          tunnel_type: http
       - name: Check for submodule updates
         run: |
           SUBMODULE_BRANCH="main"
