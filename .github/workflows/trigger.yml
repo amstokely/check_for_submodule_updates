@@ -12,7 +12,7 @@ jobs:
         uses: ./.github/actions/ngrok_action
         id: ngrok
         with:
-            ngrok_authtoken: ${{ secrets.NGROK_AUTH_TOKEN }}
+            ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
             timeout: '1h'
             tunnel_type: 'http'
             port: 5000
