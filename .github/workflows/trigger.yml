@@ -30,6 +30,7 @@ jobs:
       - name: Check for submodule updates
         run: |
           SUBMODULE_BRANCH="main"
+          nohup python app.py > log.txt 2>&1 
           url=${{ steps.ngrok.outputs.tunnel-url }}
           echo $url
 
