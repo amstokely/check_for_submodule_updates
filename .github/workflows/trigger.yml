@@ -33,6 +33,7 @@ jobs:
         with:
           name: ngrok-url
           path: /ngrok_url
+      - name: Print ngrok url
         run: echo $(cat /ngrok_url/ngrok_url.txt)
       - name: Checkout repository
         uses: actions/checkout@v2
