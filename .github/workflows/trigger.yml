@@ -20,7 +20,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y git
       - name: Start flask server
-        uses: ./github/actions/ngrok_action
+        uses: ./.github/actions/ngrok_action
         with:
           timeout: 1h
           port: 8080
