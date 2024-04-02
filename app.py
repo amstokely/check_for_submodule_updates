@@ -16,6 +16,7 @@ def receive_message():
         ['bash', 'install_python_package.sh', data['package']],
         stdout=subprocess.PIPE)
     out, err = proc.communicate()
+    print(out)
     return out, 204
 
 
