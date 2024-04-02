@@ -25,4 +25,6 @@ jobs:
           path: ngrok_url.txt
       - name: Push to dev
         run: |
+          git checkout dev
+          git commit -m "Push to dev" --allow-empty
           git push origin dev
