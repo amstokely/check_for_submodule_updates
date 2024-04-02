@@ -32,9 +32,6 @@ jobs:
           ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
           tunnel_type: http
       - name: Check for submodule updates
-        with:
-
-
         run: |
           SUBMODULE_BRANCH="main"
           nohup python3 app.py > log.txt 2>&1 
