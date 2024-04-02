@@ -24,7 +24,7 @@ jobs:
         id: ngrok
         with:
           timeout: 1h
-          port: 8080
+          port: 5000
           ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
           tunnel_type: http
       - name: Check for submodule updates

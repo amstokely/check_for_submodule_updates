@@ -22,14 +22,4 @@ def receive_message():
 
 if __name__ == '__main__':
     port = 5000
-    ngrok_process = subprocess.Popen(['ngrok', 'http', str(port)],
-                                     stdout=subprocess.PIPE)
-    time.sleep(1)
-    # Get the ngrok tunnel information (ngrok API default port is 4040)
-    ngrok_url = "http://localhost:4040/api/tunnels"
-    response = requests.get(ngrok_url)
-    tunnels = json.loads(response.text)
-    # Find the public URL for http forwarding
-    public_url = tunnels['tunnels'][0]['public_url']
-    print(public_url)
     app.run(port=port, debug=True, threaded=True)
