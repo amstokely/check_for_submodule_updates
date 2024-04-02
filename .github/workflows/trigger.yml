@@ -32,6 +32,8 @@ jobs:
           ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
           tunnel_type: http
       - name: Check for submodule updates
+        with:
+
 
         run: |
           SUBMODULE_BRANCH="main"
@@ -41,6 +43,7 @@ jobs:
 
           # Navigate to the submodule directory
           cd ./tmp
+          echo "Entering submodule directory..."
 
           git fetch
 
