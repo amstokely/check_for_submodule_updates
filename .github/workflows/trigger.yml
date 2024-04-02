@@ -3,7 +3,7 @@ name: Check Submodule Updates
 on:
   push:
     branches:
-      - master
+      - dev
 jobs:
   launch-flask-server:
     runs-on: self-hosted
