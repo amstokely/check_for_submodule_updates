@@ -33,7 +33,10 @@ jobs:
         with:
           name: ngrok-url
       - name: Print ngrok url
-        run: echo $(cat ngrok_url.txt)
+        run: |
+          echo "NGROK_URL=$(cat ngrok_url.txt" >> $GITHUB_ENV
+          echo ${{ env.NGROK_URL }}
+
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
@@ -47,7 +50,6 @@ jobs:
       - name: Check for submodule updates
         run: |
           SUBMODULE_BRANCH="main"
-          url=$(cat ngrok_url.txt)
           # Navigate to the submodule directory
           cd ./tmp
           echo "Entering submodule directory..."
@@ -58,7 +60,7 @@ jobs:
           REMOTE_COMMIT=$(git rev-parse origin/${SUBMODULE_BRANCH})
           if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
             echo "Submodule in branch ${SUBMODULE_BRANCH} has been updated."
-            curl --header "Content-Type: application/json"   --request POST   --data '{"package": "swig"}'   $url
+            curl --header "Content-Type: application/json"   --request POST   --data '{"package": "swig"}' ${{ env.NGROK_URL }} 
             exit 1
           else
             echo "No updates found for submodule in branch ${SUBMODULE_BRANCH}."
