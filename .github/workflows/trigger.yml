@@ -10,7 +10,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v0.1.7.2
+        uses: actions/checkout@v2
         with:
           # Make sure to fetch submodules
           submodules: 'recursive'
@@ -20,7 +20,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y git
       - name: Start flask server
-        uses: luisboto/ngrok-tunnel-action@2
+        uses: luisboto/ngrok-tunnel-action@0.1.7.2
         with:
           timeout: 1h
           port: 8080
