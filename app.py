@@ -16,10 +16,9 @@ def receive_message():
         ['bash', 'install_python_package.sh', data['package']],
         stdout=subprocess.PIPE)
     out, err = proc.communicate()
-    # return a status code
     return out, 204
 
 
 if __name__ == '__main__':
     port = 5000
-    app.run(port=port, debug=True, threaded=True)
+    app.run(port=port)
