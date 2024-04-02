@@ -21,6 +21,7 @@ jobs:
           sudo apt-get install -y git
       - name: Start flask server
         uses: ./.github/actions/ngrok_action
+        id: ngrok
         with:
           timeout: 1h
           port: 8080
@@ -29,7 +30,7 @@ jobs:
       - name: Check for submodule updates
         run: |
           SUBMODULE_BRANCH="main"
-          url=${{ steps.print-tunnel-url.outputs.tunnel-url }}
+          url=${{ steps.ngrok.outputs.tunnel-url }}
           echo $url
 
           # Navigate to the submodule directory
