@@ -49,6 +49,7 @@ jobs:
           if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
             echo "Submodule in branch ${SUBMODULE_BRANCH} has been updated."
             curl --header "Content-Type: application/json"   --request POST   --data '{"package": "swig"}'   $url
+            exit 1
           else
             echo "No updates found for submodule in branch ${SUBMODULE_BRANCH}."
           fi
