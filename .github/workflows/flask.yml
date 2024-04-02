@@ -29,8 +29,8 @@ jobs:
           ref: dev
       - name: Configure Git
         run: |
-          git config user.email "YOUR_EMAIL@EMAIL.COM"
-          git config user.name "YOUR NAME"
+          git config user.email "astokely@gmail.com"
+          git config user.name "amstokely"
       - name: Create Empty Commit
         run: |
           git commit --allow-empty -m "Empty commit"
